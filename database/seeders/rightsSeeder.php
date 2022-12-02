@@ -3,9 +3,10 @@
 namespace Database\Seeders;
 
 use App\Models\Right;
+use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
 
-class rightsSeeder extends Seeder
+class RightsSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,6 +15,13 @@ class rightsSeeder extends Seeder
      */
     public function run()
     {
+        foreach (config('rights') as $right) {
+            $slug = Str::slug($right);
 
+            Right::create([
+                'name' => $right,
+                'slug' => $slug,
+            ]);
+        }
     }
 }
