@@ -6,4 +6,5 @@ return [
     'Administrator',
     'Scheidsrechter',
     'Scholier-Student',
+    'Scholier-Begeleider',
 ];
