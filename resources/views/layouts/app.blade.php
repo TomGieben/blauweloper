@@ -18,12 +18,16 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    {{-- Font awesome --}}
+    <script src="https://kit.fontawesome.com/5e3d25cf7b.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-light bg-primary shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
+                <a class="navbar-brand text-white" href="{{ url('/') }}">
+                    <i class="fas fa-chess-king-piece"></i>
                     {{ config('app.name', 'Laravel') }}
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -42,26 +46,49 @@
                         @guest
                             @if (Route::has('login'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                    <a class="nav-link text-white" href="{{ route('login') }}">{{ __('Login') }}</a>
                                 </li>
                             @endif
 
                             @if (Route::has('register'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                    <a class="nav-link text-white" href="{{ route('register') }}">{{ __('Register') }}</a>
                                 </li>
                             @endif
                         @else
                             <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                <a id="navbarDropdown" class="nav-link text-white dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item {{ Route::is('home') ? 'active' : '' }}" href="{{ route('home') }}">
+                                        <i class="fas fa-grid-horizontal"></i>
+                                        Overzicht
+                                    </a>
+                                    <a class="dropdown-item {{ Route::is('users.*') ? 'active' : '' }}" href="{{ route('users.index') }}">
+                                        <i class="fas fa-solid fa-users"></i>
+                                        Gebruikers
+                                    </a>
+                                    <a class="dropdown-item {{ Route::is('groups.*') ? 'active' : '' }}" href="{{ route('groups.index') }}">
+                                        <i class="fas fa-people-group"></i>
+                                        Groepen
+                                    </a>
+                                    <a class="dropdown-item {{ Route::is('matches.*') ? 'active' : '' }}" href="{{ route('matches.index') }}">
+                                        <i class="fas fa-chess"></i>
+                                        Wedstrijden
+                                    </a>
+                                    <a class="dropdown-item {{ Route::is('rights.*') ? 'active' : '' }}" href="{{ route('rights.index') }}">
+                                        <i class="fas fa-gavel"></i>
+                                        Rechten
+                                    </a>
+
                                     <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
+                                        onclick="event.preventDefault();
+                                                    document.getElementById('logout-form').submit();">
+
+                                        <i class="fas fa-right-from-bracket"></i>
+                                        {{ __('Log uit') }}
                                     </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
@@ -75,20 +102,61 @@
             </div>
         </nav>
 
-        <main class="py-4">
+        <main class="py-4 container">
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
             @yield('content')
         </main>
     </div>
+
+    {{-- Select 2 --}}
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js%22%3E"></script>
+
     {{-- Jquery --}}
     <script
         src="https://code.jquery.com/jquery-3.6.1.slim.min.js"
         integrity="sha256-w8CvhFs7iHNVUtnSP0YKEg00p9Ih13rlL9zGqvLdePA="
         crossorigin="anonymous">
     </script>
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
+    {{-- Swal --}}
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    {{-- JS --}}
     <script>
+        $('.delete-user').click(function(e) {
+            swal({
+                title: "Weet je zeker dat je deze data wilt verwijderen?",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+                buttons: ["Afbreken", "Doorgaan"],
+            })
+            .then((confirm) => {
+                if (confirm) {
+                    (e.target).closest('form').submit()
+                    swal({
+                        title: "Data verwijderd!",
+                        icon: "success",
+                    });
+                } else {
+                    swal({
+                        title: "Actie afgebroken.",
+                        icon: "info",
+                    });
+                }
+            });
+        });
+
         $(document).ready(function() {
             $('.multiple').select2();
         });
