@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\RightUser;
 use App\Models\Right;
 use App\Models\Group;
 use Illuminate\Http\Request;
@@ -57,6 +58,11 @@ class UserController extends Controller
             'name'=> $request->name,
             'email'=> $request->email,
             'password'=> Hash::make($request->password),
+        ]);
+
+        RightUser::create([
+            'name'=> $request->name,
+            'email'=> $request->email,
         ]);
 
         return redirect()->route('users.index');
