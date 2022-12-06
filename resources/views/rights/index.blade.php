@@ -10,7 +10,7 @@
                         Rechten
                     </div>
                     <div class="col-auto">
-                        <a href="{{ route('rights.create') }}" class="btn btn-success">
+                        <a href="{{ route('rights.create') }}" class="btn btn-success text-white">
                             <i class="fas fa-plus"></i>
                         </a>
                     </div>
@@ -31,11 +31,8 @@
                                 <tr>
                                     <td>{{ $right->name }}</td>
                                     <td>
-                                    <a href="{{ route('rights.edit', [$right]) }}" class="btn btn-warning">
+                                        <a href="{{ route('rights.edit', [$right]) }}" class="btn btn-warning">
                                             <i class="fas fa-pencil"></i>
-                                        </a>
-                                        <a href="{{ route('rights.show', [$right]) }}" class="btn btn-info">
-                                            <i class="fas fa-eye"></i>
                                         </a>
                                     </td>
                                 </tr>
