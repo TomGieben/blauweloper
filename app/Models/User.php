@@ -45,4 +45,8 @@ class User extends Authenticatable
     public static function GeneratePassword() {
         
     }
+        
+    public function getRouteKeyName(){
+        return 'slug';
+    }
 }
