@@ -6,15 +6,17 @@ use Illuminate\Http\Request;
 use App\Models\Match;
 use App\Models\User;
 
+
 class MatchController extends Controller
 {
     public function index () {
-        Match::all();
+
         return view('matches.index');
     }
 
     public function create () {
-
+        $eee = Match::with('matchUser')->get();
+        dd($eee);
         return view('matches.create');
     }
 
