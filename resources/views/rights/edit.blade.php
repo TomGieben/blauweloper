@@ -21,6 +21,7 @@
                         <button type="submit" class="btn btn-success text-white">
                             <i class="fas fa-save"></i> Opslaan
                         </button>
+                    </form>
                     </div>
                     <div class="col-auto">
                         <form method="POST" action="{{ route('rights.destroy', [$right]) }}">
@@ -37,6 +38,5 @@
                 </div>
             </div>
         </div>
-    </form>
 </div>
 @endsection
