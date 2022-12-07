@@ -26,7 +26,9 @@ Auth::routes();
 
 Route::middleware('auth')->group(function() {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
-    
+
+    Route::get('/ajax', [GroupController::class, 'ajax'])->name('ajax');
+
     Route::resource('matches', MatchController::class);
     Route::resource('groups', GroupController::class);
     Route::resource('users', UserController::class);

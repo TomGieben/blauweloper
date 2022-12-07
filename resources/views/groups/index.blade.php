@@ -13,7 +13,7 @@
                 <td>ID</td>
                 <td>group Name</td>
                 <td>Action</td>
-                <td><a href="{{ route('group.create',)}}" class="btn btn-success">Create</a></td>
+                <td><a href="{{ route('groups.create',)}}" class="btn btn-success">Create</a></td>
             </tr>
         </thead>
         <tbody>
@@ -21,9 +21,9 @@
                 <tr>
                     <td>{{$group->id}}</td>
                     <td>{{$group->name}}</td>
-                    <td><a href="{{ route('group.edit', $group->id)}}" class="btn btn-primary">Edit</a></td>
+                    <td><a href="{{ route('groups.edit', $group->id)}}" class="btn btn-primary">Edit</a></td>
                     <td>
-                        <form action="{{ route('group.destroy', $group->id)}}" method="post">
+                        <form action="{{ route('groups.destroy', $group->id)}}" method="post">
                         @csrf
                         @method('DELETE')
                         <button class="btn btn-danger" type="submit">Delete</button>
