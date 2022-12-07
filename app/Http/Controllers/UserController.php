@@ -117,6 +117,7 @@ class UserController extends Controller
     public function update()
     {
 
+        return redirect()->route('users.index');
     }
 
     /**
