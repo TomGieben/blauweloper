@@ -21,7 +21,11 @@ class UserController extends Controller
     public function index()
     {
 
-       return view('users.index');
+        $users = User::all();
+
+        return view('users.index', [
+             'users' => $users,
+        ]);
     }
 
     /**
@@ -87,7 +91,6 @@ class UserController extends Controller
      */
     public function show()
     {
-
     }
 
     /**
@@ -96,9 +99,12 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit()
+    public function edit(Request $request, User $user)
     {
 
+        return view('users.edit', [
+            'user' => $user,
+        ]);
     }
 
     /**

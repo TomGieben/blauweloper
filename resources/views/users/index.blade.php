@@ -22,8 +22,28 @@
                     </div>
 
                     <div class="card-body">
-                        <div class="card my-2">
-                        </div>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Naam</th>
+                                    <th scope="col">Opties</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    @foreach($users as $user)
+                                    <tr>
+                                        <td>{{ $user->name }}</td>
+                                        <td>
+                                            <a href="{{ route('users.edit', [$user]) }}" class="btn btn-warning">
+                                                <i class="fas fa-pencil"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
