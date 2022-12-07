@@ -15,9 +15,13 @@ class MatchController extends Controller
     }
 
     public function create () {
-        $eee = Match::with('matchUser')->get();
-        dd($eee);
-        return view('matches.create');
+        $users = User::all();
+        $coaches = User::with('rights')->get();
+        dd($coaches);
+
+        return view('matches.create', [
+            'users' => $users,
+        ]);
     }
 
     public function store () {

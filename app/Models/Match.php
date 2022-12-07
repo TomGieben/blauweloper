@@ -14,9 +14,4 @@ class Match extends Model
     public function getRouteKeyName(){
         return 'slug';
     }
-
-    public function matchUser() :HasMany
-    {
-        return $this->hasMany(MatchUser::class);
-    }
 }
