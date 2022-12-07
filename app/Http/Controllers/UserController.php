@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Models\RightUser;
 use App\Models\Right;
 use App\Models\Group;
+use App\Models\GroupUser;
+use App\Models\RightUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -53,17 +54,27 @@ class UserController extends Controller
             'email' => 'required',
             'password' => 'required',
         ]);
-
-        User::create([
+        $user = User::create([
             'name'=> $request->name,
             'email'=> $request->email,
             'password'=> Hash::make($request->password),
         ]);
 
-        RightUser::create([
-            'name'=> $request->name,
-            'email'=> $request->email,
-        ]);
+        foreach($request->rights as $right) {
+
+            RightUser::create([
+                'right_id'=> $right,
+                'user_id' => $user->id,
+            ]);
+        }
+
+        foreach($request->groups as $group) {
+            
+            GroupUser::create([
+                'group_id'=> $group,
+                'user_id' => $user->id,
+            ]);
+        }
 
         return redirect()->route('users.index');
     }
