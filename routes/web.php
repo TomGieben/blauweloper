@@ -30,5 +30,5 @@ Route::middleware('auth')->group(function() {
     Route::resource('matches', MatchController::class);
     Route::resource('groups', GroupController::class);
     Route::resource('users', UserController::class);
-    Route::resource('rights', RightController::class);
+    Route::resource('rights', RightController::class)->except(['show']);
 });
