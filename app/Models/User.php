@@ -52,6 +52,11 @@ class User extends Authenticatable
         return $this->belongsToMany(Right::class, 'right_users', 'user_id', 'right_id');
     }
 
+    public function matches(): BelongsToMany
+    {
+        return $this->belongsToMany(Match::class, 'match_users', 'user_id', 'match_id')->withPivot('is_player', 'has_won', 'score');
+    }
+    
     public function hasRight(string $right): bool {
         $right = Right::select('id')->where('slug', $right)->first();
         $user = auth()->user();
@@ -65,4 +70,5 @@ class User extends Authenticatable
 
         return ($right ? $relation : false);
     }
+
 }

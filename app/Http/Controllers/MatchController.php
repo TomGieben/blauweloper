@@ -16,11 +16,13 @@ class MatchController extends Controller
 
     public function create () {
         $users = User::all();
-        $coaches = User::with('rights')->get();
-        dd($coaches);
+        $coaches = User::whereHas('rights', function($query) {
+            $query->where('slug', 'scheidsrechter');
+        })->get();
 
         return view('matches.create', [
             'users' => $users,
+            'coaches' => $coaches,
         ]);
     }
 
