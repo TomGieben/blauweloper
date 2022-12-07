@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -42,7 +43,26 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function getRouteKeyName(){
+    public function getRouteKeyName() {
         return 'slug';
+    }
+
+    public function rights(): BelongsToMany
+    {
+        return $this->belongsToMany(Right::class, 'right_users', 'user_id', 'right_id');
+    }
+
+    public function hasRight(string $right): bool {
+        $right = Right::select('id')->where('slug', $right)->first();
+        $user = auth()->user();
+
+        if($right) {
+            $relation = RightUser::query()
+                ->where('user_id', $user->id)
+                ->where('right_id', $right->id)
+                ->exists();
+        }
+
+        return ($right ? $relation : false);
     }
 }
