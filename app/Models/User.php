@@ -43,8 +43,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function getRouteKeyName() {
-        return 'slug';
+    public function matches(): BelongsToMany
+    {
+        return $this->belongsToMany(Match::class, 'match_users', 'user_id', 'match_id')->withPivot('is_player', 'has_won', 'score');
     }
 
     public function rights(): BelongsToMany
