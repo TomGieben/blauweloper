@@ -1,5 +1,11 @@
 @extends('layouts.app')
 @section('content')
+@if(auth()->user()->hasRight([
+    'administrator',
+    'secretariaat',
+    'scheidsrechter',
+    'scholier-begeleider',
+]))
 <div class="container">
     <div class="card">
         <form action="{{route('matches.store')}}" class="form form-control" method="POST">
@@ -45,7 +51,5 @@
         </form>
     </div>
 </div>
-<script>
-
-</script>
+@endif
 @endsection

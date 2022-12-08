@@ -1,6 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
+@if(auth()->user()->hasRight([
+    'administrator',
+    'secretariaat',
+    'scheidsrechter',
+    'scholier-begeleider',
+]))
 <div class="row justify-content-center">
     <div class="col-md-10">
         <div class="card">
@@ -62,4 +68,5 @@
         </div>
     </div>
 </div>
+@endif
 @endsection
