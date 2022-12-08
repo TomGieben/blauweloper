@@ -7,6 +7,7 @@ use App\Models\Right;
 use App\Models\RightUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use App\Models\User;
 
 class GroupController extends Controller
 {
@@ -68,7 +69,10 @@ class GroupController extends Controller
         return redirect('/groups')->with('success', 'Groep succes vol verwijderd');
     }
 
-    public function ajax(){
-        return view('groups.ajax');
+    public function ajax(Request $request){
+        $ajaxretrieve = User::whereHas('rights', function($query) use ($request){
+            $query->where('id', $request->selectedright);
+        })->get();
+        return $ajaxretrieve;
     }
 }

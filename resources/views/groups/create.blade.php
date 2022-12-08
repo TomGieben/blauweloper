@@ -21,14 +21,8 @@
                         </select>
                     </div>
                     <div>
-                        <select class="multiple col-lg-3" name="naamselect" multiple="multiple">
-                            @if ( $right->name == $right->name)
-                                @foreach ($users as $user)
-                                    <option value="{{$user->id}}">{{$user->name}}</option>
-                                @endforeach
-                            @else
-                                <option value="null">Selecteer recht A.U.B</option>
-                            @endif
+                        <select class="multiple col-lg-3" name="naamselect[]" multiple="multiple" id="naamselect">
+
                         </select>
                     </div>
                     <button type="submit" class="btn btn-success my-1">Add Group</button>
@@ -52,19 +46,20 @@
             var selector = document.getElementById('rechtenselect').value;
 
             $.ajax({
-            url : 'http://blauweloper.test/groups/ajax',
-            type : 'GET',
+            url : "{{ route('ajax') }}",
+            type : 'POST',
             data : {
+                '_token' : "{{ csrf_token() }}",
                 'selectedright' : selector
             },
             dataType:'json',
             success : function(data) {
-                alert('Data: '+data);
+                data.forEach(user => {
+                    console.log(user.id)
+                    console.log(user.name)
+                    document.write("<option value=`${data.id}`> `${data.name}` </option>")
+                });
             },
-            error : function(request,error)
-            {
-                alert("Request: "+JSON.stringify(request));
-            }
             });
 
         }
