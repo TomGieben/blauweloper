@@ -99,9 +99,4 @@ class User extends Authenticatable
 
         return ($group ? $relation : false);
     }
-<<<<<<< HEAD
-
-=======
-    
->>>>>>> master
 }
