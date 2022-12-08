@@ -13,8 +13,8 @@
                                 </div>
                             </div>
                             <div class="col-auto">
-                                <a href="{{ route('users.create') }}" class="btn btn-success"> 
-                                    Toevoegen
+                                <a href="{{ route('users.create') }}" class="btn btn-success text-white">
+                                    <i class="fas fa-plus"></i>
                                 </a>
                             </div> 
                         
