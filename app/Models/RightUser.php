@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class RightUser extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'right_id',
+        'user_id',
+    ];
+
+    public $timestamps = false;
 }

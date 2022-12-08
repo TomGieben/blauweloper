@@ -82,7 +82,7 @@
                                         <i class="fas fa-gavel"></i>
                                         Rechten
                                     </a>
-                                    <a class="dropdown-item {{ Route::is('users.edit') ? 'active' : '' }}" href="{{ route('users.edit', auth()->user()) }}">
+                                    <a class="dropdown-item {{ Route::is('users.edit') && request()->user->id == auth()->user()->id ? 'active' : '' }}" href="{{ route('users.edit', auth()->user()) }}">
                                         <i class="fas fa-sliders"></i>
                                         Instellingen
                                     </a>
