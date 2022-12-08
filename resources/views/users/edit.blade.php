@@ -22,7 +22,7 @@
                     </div>
                     <div class="card-body">
                         <form action="{{ route('users.update', $user) }}" method="post" autocomplete="off">
-                            @method('post')
+                            @method('put')
                             @csrf
                             <div class="row justify-content-between">
                                 <div class="col-auto">
@@ -36,6 +36,7 @@
                                     <input type="text" class="form-control" id="email" name="email" value="{{ $user->email }}">
                                 </div>
                             </div>
+
                             <div class="row justify-content-between">
                                 <div class="col-auto">
                                     <label for="password"><h4>Wachtwoord<h4></label>
@@ -45,18 +46,18 @@
 
                             <div class="row justify-content-between mt-2">
                                 <select class="multiple col-lg-3" name="rights[]" multiple="multiple">
-                                    @foreach ($rights as $right)
-                                        <option value="{{$right->id}}">{{$right->name}}</option>
+                                    @foreach ($rights as $right) 
+                                        <option value="{{$right->id}}" @if($user->hasRight($right->slug)) selected @endif>{{$right->name}}</option>
                                     @endforeach
                                 </select>
                         </div>
 
                         <div class="row justify-content-between mt-3">
-                                <select class="multiple col-lg-3" name="groups[]" multiple="multiple">
-                                    @foreach ($groups as $group)
-                                        <option value="{{$group->id}}">{{$group->name}}</option>
-                                    @endforeach
-                                </select>
+                            <select class="multiple col-lg-3" name="groups[]" multiple="multiple">
+                                @foreach ($groups as $group)
+                                    <option value="{{$group->id}}" @if($user->inGroup($group->slug)) selected @endif>{{$group->name}}</option>
+                                @endforeach
+                            </select>
                         </div>
 
                             <div class="row justify-content-between">

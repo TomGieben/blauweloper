@@ -118,8 +118,49 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update()
-    {
+    public function update(Request $request,User $user)
+    {   
+
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required',
+        ]);
+
+        User::query()
+            ->where('id', $user->id)
+            ->update([
+                'name'=> $request->name,
+                'email' => $request->email,
+                'password' => $request->password ? Hash::make($request->password) : $user->password,
+            ]);
+
+            RightUser::query()
+                ->where('user_id', $user->id)
+                ->delete();
+
+            GroupUser::query()
+                ->where('user_id', $user->id)
+                ->delete();
+
+        if($request->rights) {
+            foreach($request->rights as $right) {
+
+                RightUser::create([
+                    'right_id'=> $right,
+                    'user_id' => $user->id,
+                ]);
+            }
+        }
+
+        if($request->groups) {
+            foreach($request->groups as $group) {
+
+                GroupUser::create([
+                    'group_id'=> $group,
+                    'user_id' => $user->id,
+                ]);
+            }
+        }
 
         return redirect()->route('users.index');
     }

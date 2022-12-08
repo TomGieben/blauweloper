@@ -53,19 +53,17 @@ class User extends Authenticatable
         return $random_password;
     }
     
-    public function matches(): BelongsToMany
-    {
+    public function matches(): BelongsToMany {
         return $this->belongsToMany(Match::class, 'match_users', 'user_id', 'match_id')->withPivot('is_player', 'has_won', 'score');
     }
 
-    public function rights(): BelongsToMany
-    {
+    public function rights(): BelongsToMany {
         return $this->belongsToMany(Right::class, 'right_users', 'user_id', 'right_id');
     }
 
     public function hasRight(string $right): bool {
         $right = Right::select('id')->where('slug', $right)->first();
-        $user = auth()->user();
+        $user = $this;
 
         if($right) {
             $relation = RightUser::query()
@@ -75,6 +73,20 @@ class User extends Authenticatable
         }
 
         return ($right ? $relation : false);
+    }
+
+    public function inGroup(string $group): bool {
+        $group = Group::select('id')->where('slug', $group)->first();
+        $user = $this;
+
+        if($group) {
+            $relation = GroupUser::query()
+                ->where('user_id', $user->id)
+                ->where('group_id', $group->id)
+                ->exists();
+        }
+
+        return ($group ? $relation : false);
     }
     
 }
