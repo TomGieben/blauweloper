@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Group;
+use App\Models\GroupUser;
 use App\Models\Right;
 use App\Models\RightUser;
 use Illuminate\Http\Request;
@@ -35,10 +36,19 @@ class GroupController extends Controller
             'name' => 'required|max:255',
         ]);
         $slug = Str::slug($request->name);
-        Group::create([
+         $group = Group::create([
             'name' => $request->name,
             'slug' => $slug,
         ]);
+
+        if($request->naamselect){
+            foreach($request->naamselect as $user){
+                GroupUser::create([
+                    'group_id' => $group->id,
+                    'user_id' => $user,
+                ]);
+            }
+        }
         return redirect('/groups')->with('success', 'Groep is success vol ingevoerd');
     }
 
@@ -51,13 +61,22 @@ class GroupController extends Controller
 
     public function edit($id)
     {
+        $rights = Right::all();
+        $users = RightUser::all();
+        $group = Group::findorFail($id);
 
+        return view('groups.edit', compact('group'), ['rights' => $rights, 'users' => $users,]);
     }
 
 
     public function update(Request $request, $id)
     {
+        $validatedData = $request->validate([
+            'name' => 'required|max:255',
+        ]);
 
+        Group::where('id', $id)->update($validatedData);
+        GroupUser::where('id', $id)->update($request->naamselect);
     }
 
 

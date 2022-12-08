@@ -6,7 +6,7 @@
                 Add Group Data
             </div>
             <div class="card-body">
-                <form method="post" action="{{ route('groups.store') }}">
+                <form method="post" action="{{ route('groups.update', $group->id) }}">
                     <div class="form-group">
                         @csrf
                         <label for="name">Group name</label>
@@ -22,7 +22,9 @@
                     </div>
                     <div>
                         <select class="multiple col-lg-3" name="naamselect[]" multiple="multiple" id="naamselect">
-
+                            @foreach ($users as $user)
+                            <option value="{{$user->id}}" selected>{{$user->name}}</option>
+                            @endforeach
                         </select>
                     </div>
                     <button type="submit" class="btn btn-success my-1">Add Group</button>
