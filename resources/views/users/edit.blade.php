@@ -47,7 +47,7 @@
                             <div class="row justify-content-between mt-2">
                                 <select class="multiple col-lg-3" name="rights[]" multiple="multiple">
                                     @foreach ($rights as $right) 
-                                        <option value="{{$right->id}}" @if($user->hasRight($right->slug)) selected @endif>{{$right->name}}</option>
+                                        <option value="{{$right->id}}" @if($user->hasRight([$right->slug])) selected @endif>{{$right->name}}</option>
                                     @endforeach
                                 </select>
                         </div>
