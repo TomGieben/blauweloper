@@ -101,10 +101,14 @@ class UserController extends Controller
      */
     public function edit(Request $request, User $user)
     {
+        $rights = Right::all();
+        $groups = Group::all();
 
-        return view('users.edit', [
+         return view('users.edit', [ 
+            'rights' => $rights,
+            'groups' => $groups,
             'user' => $user,
-        ]);
+         ]);
     }
 
     /**

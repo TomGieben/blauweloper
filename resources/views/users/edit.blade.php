@@ -44,14 +44,20 @@
                             </div>
 
                             <div class="row justify-content-between mt-2">
-                                    <select class="multiple col-lg-3" name="rights[]" multiple="multiple">
-                                    </select>
-                            </div>
+                                <select class="multiple col-lg-3" name="rights[]" multiple="multiple">
+                                    @foreach ($rights as $right)
+                                        <option value="{{$right->id}}">{{$right->name}}</option>
+                                    @endforeach
+                                </select>
+                        </div>
 
-                            <div class="row justify-content-between mt-3">
-                                    <select class="multiple col-lg-3" name="groups[]" multiple="multiple">
-                                    </select>
-                            </div>
+                        <div class="row justify-content-between mt-3">
+                                <select class="multiple col-lg-3" name="groups[]" multiple="multiple">
+                                    @foreach ($groups as $group)
+                                        <option value="{{$group->id}}">{{$group->name}}</option>
+                                    @endforeach
+                                </select>
+                        </div>
 
                             <div class="row justify-content-between">
                                 <div class="col-auto">
