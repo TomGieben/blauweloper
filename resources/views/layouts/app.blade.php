@@ -68,6 +68,7 @@
                                     </a>
                                     @if(auth()->user()->hasRight([
                                         'administrator',
+                                        'secretariaat',
                                     ]))
                                         <a class="dropdown-item {{ Route::is('users.*') ? 'active' : '' }}" href="{{ route('users.index') }}">
                                             <i class="fas fa-solid fa-users"></i>
@@ -84,6 +85,9 @@
                                     @endif
                                     @if(auth()->user()->hasRight([
                                         'administrator',
+                                        'secretariaat',
+                                        'scheidsrechter',
+                                        'scholier-begeleider',
                                     ]))
                                         <a class="dropdown-item {{ Route::is('matches.*') ? 'active' : '' }}" href="{{ route('matches.index') }}">
                                             <i class="fas fa-chess"></i>
