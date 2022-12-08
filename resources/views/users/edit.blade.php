@@ -59,16 +59,36 @@
                                 @endforeach
                             </select>
                         </div>
-
-                            <div class="row justify-content-between">
-                                <div class="col-auto">
-                                </div>
-                                <div class="col-auto">
-                                    <button type="submit" class="btn btn-success">Toevoegen</button>
-                                </div>
-                            </div>
-                        </form>
                     </div>
+
+
+                    <div class="card-footer">
+                        <div class="row justify-content-between">
+                            <div class="col-auto">
+                                <button type="submit" class="btn btn-success text-white">
+                                    <i class="fas fa-save"></i> Opslaan
+                                </button>
+                            </form>
+                            </div>
+                            <div class="col-auto">
+                                <form method="POST" action="{{ route('users.destroy', [$user]) }}">
+                                    {{ csrf_field() }}
+                                    {{ method_field('DELETE') }}
+                            
+                                    <div class="form-group">
+                                        <button type="button" class="btn btn-danger text-white delete-user">
+                                            <i class="fas fa-trash"></i> Verwijder
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
                 </div>
             </div>
         </div>

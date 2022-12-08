@@ -64,23 +64,27 @@ class UserController extends Controller
             'password'=> Hash::make($request->password),
         ]);
 
-        foreach($request->rights as $right) {
+        if($request->rights) {
+            foreach($request->rights as $right) {
 
-            RightUser::create([
-                'right_id'=> $right,
-                'user_id' => $user->id,
-            ]);
+                RightUser::create([
+                    'right_id'=> $right,
+                    'user_id' => $user->id,
+                ]);
+            }
         }
 
-        foreach($request->groups as $group) {
-            
-            GroupUser::create([
-                'group_id'=> $group,
-                'user_id' => $user->id,
-            ]);
-        }
+        if($request->groups) {
+            foreach($request->groups as $group) {
+                
+                GroupUser::create([
+                    'group_id'=> $group,
+                    'user_id' => $user->id,
+                ]);
+            }
 
-        return redirect()->route('users.index');
+            return redirect()->route('users.index');
+        }
     }
 
     /**
@@ -171,8 +175,18 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy()
+    public function destroy(user $user)
     {
+        $user->delete();
+        
+        RightUser::query()
+        ->where('user_id', $user->id)
+        ->delete();
 
+        GroupUser::query()
+            ->where('user_id', $user->id)
+            ->delete();
+
+        return redirect()->route('users.index');
     }
 }
