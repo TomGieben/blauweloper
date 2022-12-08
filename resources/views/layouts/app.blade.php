@@ -66,22 +66,42 @@
                                         <i class="fas fa-grid-horizontal"></i>
                                         Overzicht
                                     </a>
-                                    <a class="dropdown-item {{ Route::is('users.*') ? 'active' : '' }}" href="{{ route('users.index') }}">
-                                        <i class="fas fa-solid fa-users"></i>
-                                        Gebruikers
-                                    </a>
-                                    <a class="dropdown-item {{ Route::is('groups.*') ? 'active' : '' }}" href="{{ route('groups.index') }}">
-                                        <i class="fas fa-people-group"></i>
-                                        Groepen
-                                    </a>
-                                    <a class="dropdown-item {{ Route::is('matches.*') ? 'active' : '' }}" href="{{ route('matches.index') }}">
-                                        <i class="fas fa-chess"></i>
-                                        Wedstrijden
-                                    </a>
-                                    <a class="dropdown-item {{ Route::is('rights.*') ? 'active' : '' }}" href="{{ route('rights.index') }}">
-                                        <i class="fas fa-gavel"></i>
-                                        Rechten
-                                    </a>
+                                    @if(auth()->user()->hasRight([
+                                        'administrator',
+                                        'secretariaat',
+                                    ]))
+                                        <a class="dropdown-item {{ Route::is('users.*') ? 'active' : '' }}" href="{{ route('users.index') }}">
+                                            <i class="fas fa-solid fa-users"></i>
+                                            Gebruikers
+                                        </a>
+                                    @endif
+                                    @if(auth()->user()->hasRight([
+                                        'administrator',
+                                    ]))
+                                        <a class="dropdown-item {{ Route::is('groups.*') ? 'active' : '' }}" href="{{ route('groups.index') }}">
+                                            <i class="fas fa-people-group"></i>
+                                            Groepen
+                                        </a>
+                                    @endif
+                                    @if(auth()->user()->hasRight([
+                                        'administrator',
+                                        'secretariaat',
+                                        'scheidsrechter',
+                                        'scholier-begeleider',
+                                    ]))
+                                        <a class="dropdown-item {{ Route::is('matches.*') ? 'active' : '' }}" href="{{ route('matches.index') }}">
+                                            <i class="fas fa-chess"></i>
+                                            Wedstrijden
+                                        </a>
+                                    @endif
+                                    @if(auth()->user()->hasRight([
+                                        'administrator',
+                                    ]))
+                                        <a class="dropdown-item {{ Route::is('rights.*') ? 'active' : '' }}" href="{{ route('rights.index') }}">
+                                            <i class="fas fa-gavel"></i>
+                                            Rechten
+                                        </a>
+                                    @endif
                                     <a class="dropdown-item {{ Route::is('users.edit') && request()->user->id == auth()->user()->id ? 'active' : '' }}" href="{{ route('users.edit', auth()->user()) }}">
                                         <i class="fas fa-sliders"></i>
                                         Instellingen

@@ -61,18 +61,24 @@ class User extends Authenticatable
         return $this->belongsToMany(Right::class, 'right_users', 'user_id', 'right_id');
     }
 
-    public function hasRight(string $right): bool {
-        $right = Right::select('id')->where('slug', $right)->first();
-        $user = $this;
-
-        if($right) {
-            $relation = RightUser::query()
-                ->where('user_id', $user->id)
-                ->where('right_id', $right->id)
-                ->exists();
+    public function hasRight(array $rights = []): bool {
+        foreach($rights as $right) {
+            $right = Right::select('id')->where('slug', $right)->first();
+            $user = $this;
+    
+            if($right) {
+                $relation = RightUser::query()
+                    ->where('user_id', $user->id)
+                    ->where('right_id', $right->id)
+                    ->exists();
+            }
+    
+            if(!$right || !$relation) {
+                return false;
+            };
         }
 
-        return ($right ? $relation : false);
+        return true;
     }
 
     public function inGroup(string $group): bool {
