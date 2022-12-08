@@ -73,8 +73,12 @@ class User extends Authenticatable
                     ->exists();
             }
     
-            return ($right ? $relation : false);
+            if(!$right || !$relation) {
+                return false;
+            };
         }
+
+        return true;
     }
 
     public function inGroup(string $group): bool {
