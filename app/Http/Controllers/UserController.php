@@ -13,11 +13,7 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-      /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
 
@@ -28,11 +24,6 @@ class UserController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         $rights = Right::all();
@@ -45,12 +36,6 @@ class UserController extends Controller
 
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $request->validate([
@@ -58,6 +43,7 @@ class UserController extends Controller
             'email' => 'required',
             'password' => 'required',
         ]);
+
         $user = User::create([
             'name'=> $request->name,
             'email'=> $request->email,
@@ -87,22 +73,6 @@ class UserController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show()
-    {
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Request $request, User $user)
     {
         $rights = Right::all();
@@ -115,13 +85,6 @@ class UserController extends Controller
          ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request,User $user)
     {   
 
@@ -138,13 +101,13 @@ class UserController extends Controller
                 'password' => $request->password ? Hash::make($request->password) : $user->password,
             ]);
 
-            RightUser::query()
-                ->where('user_id', $user->id)
-                ->delete();
+        RightUser::query()
+            ->where('user_id', $user->id)
+            ->delete();
 
-            GroupUser::query()
-                ->where('user_id', $user->id)
-                ->delete();
+        GroupUser::query()
+            ->where('user_id', $user->id)
+            ->delete();
 
         if($request->rights) {
             foreach($request->rights as $right) {
@@ -169,19 +132,13 @@ class UserController extends Controller
         return redirect()->route('users.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(user $user)
     {
         $user->delete();
         
         RightUser::query()
-        ->where('user_id', $user->id)
-        ->delete();
+            ->where('user_id', $user->id)
+            ->delete();
 
         GroupUser::query()
             ->where('user_id', $user->id)
