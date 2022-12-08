@@ -82,6 +82,10 @@
                                         <i class="fas fa-gavel"></i>
                                         Rechten
                                     </a>
+                                    <a class="dropdown-item {{ Route::is('users.edit') ? 'active' : '' }}" href="{{ route('users.edit', auth()->user()) }}">
+                                        <i class="fas fa-sliders"></i>
+                                        Instellingen
+                                    </a>
 
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                         onclick="event.preventDefault();
