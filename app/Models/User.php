@@ -4,10 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Hash;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Str;
+use App\Models\User;
 
 class User extends Authenticatable
 {
@@ -43,28 +47,52 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function matches(): BelongsToMany
-    {
+    public static function generatePassword() {
+        $random_password = str::random(12);
+
+        return $random_password;
+    }
+
+    public function matches(): BelongsToMany {
         return $this->belongsToMany(Match::class, 'match_users', 'user_id', 'match_id')->withPivot('is_player', 'has_won', 'score');
     }
 
-    public function rights(): BelongsToMany
-    {
+    public function rights(): BelongsToMany {
         return $this->belongsToMany(Right::class, 'right_users', 'user_id', 'right_id');
     }
 
-    public function hasRight(string $right): bool {
-        $right = Right::select('id')->where('slug', $right)->first();
-        $user = auth()->user();
+    public function hasRight(array $rights = []): bool {
+        foreach($rights as $right) {
+            $right = Right::select('id')->where('slug', $right)->first();
+            $user = $this;
 
-        if($right) {
-            $relation = RightUser::query()
+            if($right) {
+                $relation = RightUser::query()
+                    ->where('user_id', $user->id)
+                    ->where('right_id', $right->id)
+                    ->exists();
+            }
+
+            if($right && $relation) {
+                return true;
+            };
+        }
+
+        return false;
+    }
+
+    public function inGroup(string $group): bool {
+        $group = Group::select('id')->where('slug', $group)->first();
+        $user = $this;
+
+        if($group) {
+            $relation = GroupUser::query()
                 ->where('user_id', $user->id)
-                ->where('right_id', $right->id)
+                ->where('group_id', $group->id)
                 ->exists();
         }
 
-        return ($right ? $relation : false);
+        return ($group ? $relation : false);
     }
 
     public function groups(): BelongsToMany
