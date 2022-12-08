@@ -16,7 +16,7 @@
                         Wedstrijden
                     </div>
                     <div class="col-auto">
-                        <a href="{{ route('rights.create') }}" class="btn btn-success text-white">
+                        <a href="{{ route('matches.create') }}" class="btn btn-success text-white">
                             <i class="fas fa-plus"></i>
                         </a>
                     </div>
@@ -38,24 +38,18 @@
                     <tbody>
                         <tr>
                             @foreach($matches as $match)
-                            {{-- @dd($match->users[1]) --}}
                                 <tr>
                                     <td>{{ $match->name }}</td>
                                     @foreach($match->users as $user)
                                         @if($user->pivot->is_player)
                                             <td>
-                                                <a href="{{route("users.edit, []")}}"></a>
-                                                {{ $user->name }}
+                                                <a href="{{ route("users.edit", [$user]) }}">{{ $user->name }}</a>
                                             </td>
-                                        @else
-                                            @php
-                                                $coach = $user 
-                                            @endphp
                                         @endif
                                     @endforeach
-                                    <td><i class="fas fa-solid fa-check"></i> {{ $coach->name }}</td>
+                                    <td><a href="{{ route("users.edit", [$match->getCoach()]) }}">{{ $match->getCoach()->name }}</a></td>
                                     <td>
-                                        <a href="{{--route('rights.edit', [$right])--}}" class="btn btn-warning">
+                                        <a href="{{ route('matches.edit', [$match]) }}" class="btn btn-warning">
                                             <i class="fas fa-pencil"></i>
                                         </a>
                                     </td>

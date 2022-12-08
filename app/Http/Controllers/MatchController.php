@@ -67,8 +67,10 @@ class MatchController extends Controller
         return view('matches.show');
     }
 
-    public function edit () {
-        return view('matches.edit');
+    public function edit (Request $request, Match $match) {
+        return view('matches.edit', [
+            'match' => $match
+        ]);
     }
 
     public function update () {
