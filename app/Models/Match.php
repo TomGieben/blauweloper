@@ -40,6 +40,7 @@ class Match extends Model
         ->format(
             $this->dateformat
         );
+    }
     public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'match_users', 'match_id', 'user_id')->withPivot('is_player', 'has_won', 'score', 'created_at', 'updated_at');
