@@ -128,8 +128,14 @@ class UserController extends Controller
                 ]);
             }
         }
+        if(auth()->user()->hasRight([
+            'administrator',
+            'secretariaat',
+        ])) {
+            return redirect()->route('users.index');    
+        }
 
-        return redirect()->route('users.index');
+        return redirect()->route('home');    
     }
 
     public function destroy(user $user)
