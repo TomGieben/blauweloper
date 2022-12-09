@@ -45,15 +45,19 @@
                                         <label for="password">Wachtwoord</label>
                                         <input type="password" class="form-control" id="password" name="password">
                                     </div>
-
-                                    <div class="col-md-6">
-                                        <label for="rights">Rechten</label>
-                                        <select class="multiple form-control" id="rights" name="rights[]" multiple="multiple">
-                                            @foreach ($rights as $right) 
-                                                <option value="{{$right->id}}" @if($user->hasRight([$right->slug])) selected @endif>{{$right->name}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
+                                    @if(auth()->user()->hasRight([
+                                        'administrator',
+                                        'secretariaat',
+                                    ]))
+                                        <div class="col-md-6">
+                                            <label for="rights">Rechten</label>
+                                            <select class="multiple form-control" id="rights" name="rights[]" multiple="multiple">
+                                                @foreach ($rights as $right) 
+                                                    <option value="{{$right->id}}" @if($user->hasRight([$right->slug])) selected @endif>{{$right->name}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    @endif
                                     <div class="col-md-6">
                                         <label for="groups">Groepen</label>
                                         <select class="multiple form-control" id="groups" name="groups[]" multiple="multiple">
