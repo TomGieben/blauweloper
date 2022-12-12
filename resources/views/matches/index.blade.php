@@ -47,7 +47,11 @@
                                             </td>
                                         @endif
                                     @endforeach
-                                    <td><a href="{{ route("users.edit", [$match->getCoach()]) }}">{{ $match->getCoach()->name }}</a></td>
+                                    <td>
+                                        @if($match->getCoach())
+                                            <a href="{{ route("users.edit", [$match->getCoach()]) }}">{{ $match->getCoach()->name }}</a>
+                                        @endif
+                                    </td>
                                     <td>
                                         <a href="{{ route('matches.edit', [$match]) }}" class="btn btn-warning">
                                             <i class="fas fa-pencil"></i>

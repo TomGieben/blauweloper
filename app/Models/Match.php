@@ -46,7 +46,7 @@ class Match extends Model
         return $this->belongsToMany(User::class, 'match_users', 'match_id', 'user_id')->withPivot('is_player', 'has_won', 'score', 'created_at', 'updated_at');
     }
 
-    public function getCoach(): User{
+    public function getCoach() {
         $users = $this->users()->get();
 
         foreach($users as $user) {

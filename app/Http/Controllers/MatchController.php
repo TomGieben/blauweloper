@@ -7,6 +7,7 @@ use App\Models\Match;
 use App\Models\MatchUser;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 
 class MatchController extends Controller
@@ -68,16 +69,63 @@ class MatchController extends Controller
     }
 
     public function edit (Request $request, Match $match) {
+        $users = User::all();
+        $coaches = User::whereHas('rights', function($query) {
+            $query->where('slug', 'scheidsrechter');
+        })->get();
+
         return view('matches.edit', [
-            'match' => $match
+            'match' => $match,
+            'users' => $users,
+            'coaches' => $coaches,
         ]);
     }
 
-    public function update () {
+    public function update (Request $request, Match $match) {
+        if(!$request->player1 && !$request->player2 && !$request->coach){
+            return redirect(route('matches.index'))->withErrors('Deelnemers en schijdsrechters zijn niet ingevuld vul deze in!');
+        }
+
+        $validated = $request->validate([
+            'date' => 'required',
+            'player1' => 'required',
+            'player2' => 'required',
+            'coach' => 'required',
+            'name' => [
+                'required',
+                Rule::unique('matches')->ignore($match->id, 'id'),
+            ],
+        ]);
+
+        $match->update([
+            'name' => $validated['name'],
+            'slug' => Str::slug($validated['name']),
+            'start_date' => $request->date,
+        ]);
+
+        $matchUser = MatchUser::where('match_id', $match->id)->delete();
+
+        MatchUser::create([
+            'match_id' => $match->id,
+            'user_id' => $validated['coach'],
+            'is_player' => false,
+        ]);
+
+        for($i=1; $i<3; $i++){
+            MatchUser::create([
+                'match_id' => $match->id,
+                'user_id' => $validated['player'.strval($i)],
+                'is_player' => true,
+            ]);
+        };
+
         return redirect(route('matches.index'));
     }
 
-    public function delete () {
+    public function destroy (Request $request, Match $match) {
+        $match->delete();
+        $matchUser = MatchUser::where('match_id', $match->id)->delete();
+
         return redirect(route('matches.index'));
     }
 }

@@ -25,15 +25,17 @@
             </div>
             <div class="form-group row justify-content-between">
                 <label for="player-1" class="col-form-label">Speler 1:</label>
-                <select class="col-auto mx-2 form-control w-25" name="player1" onchange="dNone()">
+                <select class="col-auto mx-2 form-control w-25" name="player1" id="player1box" onchange="update()">
+                    <option>Selecteer...</option>
                     @foreach ($users as $user)
-                        <option id="" value="{{$user->id}}">{{$user->name}}</option>
+                        <option value="{{$user->id}}">{{$user->name}}</option>
                     @endforeach
                 </select>
             </div>
             <div class="form-group row justify-content-between">
                 <label for="player-2" class="col-form-label">Speler 2:</label>
-                <select class="col-auto mx-2 form-control w-25" name="player2">
+                <select class="col-auto mx-2 form-control w-25" name="player2" onchange="update()">
+                    <option>Selecteer...</option>
                     @foreach ($users as $user)
                         <option value="{{$user->id}}">{{$user->name}}</option>
                     @endforeach
@@ -41,10 +43,11 @@
             </div>
             <div class="form-group row justify-content-between">
                 <label for="coach" class="col-form-label">Schijdsrechter:</label>
-                <select class="col-auto mx-2 form-control w-25" name="coach">
+                <select class="col-auto mx-2 form-control w-25" name="coach" onchange="update()">
+                    <option>Selecteer...</option>
                     @foreach ($coaches as $coach)
-                    <option value="{{$coach->id}}">{{$coach->name}}</option>
-                @endforeach
+                        <option value="{{$coach->id}}">{{$coach->name}}</option>
+                    @endforeach
                 </select>
             </div>
             <input type="submit" class="btn btn-success text-white mt-2" value="Match aan maken!">
@@ -52,8 +55,30 @@
     </div>
 </div>
 <script>
-    function dNone(){
 
+    function update() {
+        const clickedElement = $(event.target);
+        const selectName = clickedElement.attr('name');
+        const selectedVal = clickedElement.val();
+        const selects = [
+            'player1',
+            'player2',
+            'coach'
+        ];
+ 
+        selects.forEach(select => {
+            if(select !== selectName) {
+                var options = $("select[name='"+ select +"'] > option");
+                
+                options.each(function() {
+                    if(this.value == selectedVal) {
+                        this.style.display = 'none';
+                    } else {
+                        this.style.display = 'block';
+                    }
+                });
+            }
+        });
     }
 </script>
 @endif
