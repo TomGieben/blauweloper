@@ -11,23 +11,25 @@
             @csrf
             <div class="card">
                 <div class="card-header">
-                    Recht {{ $group->id }} bewerken
+                     {{ $group->id }} informatie bewerken
                 </div>
                 <div class="card-body">
                     <div class="form-group">
                         @csrf
-                        <label for="name">Groep naam</label>
+                        <label for="name">Groeps naam</label>
                         <input value="{{ $group->name }}" type="text" class="form-control" name="name" />
                     </div>
                     <div>
-                        <label for="rechtenselect">Selecteer Rechten </label>
-                        <select class="multiple col-lg-3" name="selectright[]" id="rechtenselect" onchange="getselectedright()">
-                            @foreach($rights  as  $right)
-                            <option value='{{ $right->id }}'>{{ $right->name }}</option>
-                            @endforeach
-                        </select>
+                        <div class="form-group row mt-2">
+                            <label for="rechtenselect">Selecteer gebruiker op club-rechten</label>
+                            <select class="multiple col-lg-3" name="selectright[]" id="rechtenselect" onchange="getselectedright()">
+                                @foreach($rights  as  $right)
+                                <option value='{{ $right->id }}'>{{ $right->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
-                    <div>
+                    <div class="mt-2">
                         <select class="multiple col-lg-3" name="naamselect[]" multiple="multiple" id="naamselect">
                             @foreach ($users as $user)
                                 <option value="{{$user->id}}" @if($user->inGroup($group->slug)) selected @endif>{{$user->name}}</option>
@@ -50,7 +52,7 @@
 
                                 <div class="form-group">
                                     <button type="button" class="btn btn-danger text-white delete-user">
-                                        <i class="fas fa-trash"></i> Verwijder
+                                        <i class="fas fa-trash"></i> Verwijder groep
                                     </button>
                                 </div>
                             </form>

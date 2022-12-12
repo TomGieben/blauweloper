@@ -8,24 +8,26 @@
     <div class="container">
         <div class="card uper">
             <div class="card-header">
-                Add Group Data
+                Voer u groep data hier in!
             </div>
             <div class="card-body">
                 <form method="post" action="{{ route('groups.store') }}">
                     <div class="form-group">
                         @csrf
-                        <label for="name">Group name</label>
+                        <label for="name">Groeps naam</label>
                         <input type="text" class="form-control" name="name" />
                     </div>
                     <div>
-                        <label for="rechtenselect">Selecteer Rechten </label>
-                        <select class="multiple col-lg-3" name="selectright[]" id="rechtenselect" onchange="getselectedright()">
-                            @foreach($rights  as  $right)
-                            <option value='{{ $right->id }}'>{{ $right->name }}</option>
-                            @endforeach
-                        </select>
+                        <div class="form-group row mt-2">
+                            <label for="rechtenselect">Selecteer gebruiker op club-rechten</label>
+                            <select class="multiple col-lg-3" name="selectright[]" id="rechtenselect" onchange="getselectedright()">
+                                @foreach($rights  as  $right)
+                                <option value='{{ $right->id }}'>{{ $right->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
-                    <div>
+                    <div class="mt-2">
                         <select class="multiple col-lg-3" name="naamselect[]" multiple="multiple" id="naamselect">
 
                         </select>

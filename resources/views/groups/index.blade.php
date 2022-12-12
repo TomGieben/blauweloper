@@ -11,7 +11,7 @@
                 <div class="card-header">
                     <div class="row justify-content-between">
                         <div class="col-auto">
-                            groepen
+                            Groepen
                         </div>
                         <div class="col-auto">
                             <a href="{{ route('groups.create') }}" class="btn btn-success text-white">
@@ -25,7 +25,7 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th scope="col">Naam</th>
+                                <th scope="col">Groeps naam</th>
                                 <th scope="col">Opties</th>
                             </tr>
                         </thead>
