@@ -29,7 +29,7 @@ class Chess extends Model
         $boardHeight = $this->rows * $this->tileHeight;
         $boardWidth = $this->colums * $this->tileWidth;
 
-        $html = '<div style="height: '.($boardHeight + ($this->border * 2)).'px; width: '.($boardWidth + ($this->border * 2)).'px; border: '. $this->border .'px solid black;">';
+        $html = '<div style="height: '.($boardHeight + ($this->border * 2)).'px; width: '.($boardWidth + ($this->border * 2)).'px; border: '. $this->border .'px solid black;" class="shadow-lg">';
             for($r = 1; $r <= $this->rows; $r++) {
                 for($c = 1; $c <= $this->colums; $c++) {
                     $total = $r + $c;
