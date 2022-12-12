@@ -82,7 +82,7 @@ class MatchController extends Controller
     }
 
     public function update (Request $request, Match $match) {
-        if(!$request->player1 && !$request->player2 && !$request->coach){
+        if($request->player1 == 0 || $request->player2 == 0 || $request->coach ==0){
             return redirect(route('matches.index'))->withErrors('Deelnemers en schijdsrechters zijn niet ingevuld vul deze in!');
         }
 

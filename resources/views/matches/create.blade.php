@@ -24,8 +24,8 @@
                 </div>
             </div>
             <div class="form-group row justify-content-between">
-                <label for="player-1" class="col-form-label">Speler 1:</label>
-                <select class="col-auto mx-2 form-control w-25" name="player1" id="player1box" onchange="update()">
+                <label for="player1" class="col-form-label">Speler 1:</label>
+                <select class="col-auto mx-2 form-control w-25" name="player1" onchange="update()">
                     <option>Selecteer...</option>
                     @foreach ($users as $user)
                         <option value="{{$user->id}}">{{$user->name}}</option>
@@ -33,7 +33,7 @@
                 </select>
             </div>
             <div class="form-group row justify-content-between">
-                <label for="player-2" class="col-form-label">Speler 2:</label>
+                <label for="player2" class="col-form-label">Speler 2:</label>
                 <select class="col-auto mx-2 form-control w-25" name="player2" onchange="update()">
                     <option>Selecteer...</option>
                     @foreach ($users as $user)
