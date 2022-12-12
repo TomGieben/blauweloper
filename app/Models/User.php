@@ -49,10 +49,10 @@ class User extends Authenticatable
 
     public static function generatePassword() {
         $random_password = str::random(12);
-    
+
         return $random_password;
     }
-    
+
     public function rights(): BelongsToMany {
         return $this->belongsToMany(Right::class, 'right_users', 'user_id', 'right_id');
     }
@@ -66,14 +66,14 @@ class User extends Authenticatable
         foreach($rights as $right) {
             $right = Right::select('id')->where('slug', $right)->first();
             $user = $this;
-    
+
             if($right) {
                 $relation = RightUser::query()
                     ->where('user_id', $user->id)
                     ->where('right_id', $right->id)
                     ->exists();
             }
-    
+
             if($right && $relation) {
                 return true;
             };
@@ -94,5 +94,10 @@ class User extends Authenticatable
         }
 
         return ($group ? $relation : false);
+    }
+
+    public function groups(): BelongsToMany
+    {
+        return $this->belongsToMany(Group::class, 'group_users', 'group_id', 'user_id');
     }
 }
