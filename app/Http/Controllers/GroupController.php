@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Group;
 use App\Models\GroupUser;
 use App\Models\Right;
 use App\Models\RightUser;
+use Illuminate\Foundation\Auth\User as AuthUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use App\Models\User;
 
 class GroupController extends Controller
 {
@@ -59,24 +60,44 @@ class GroupController extends Controller
     }
 
 
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
         $rights = Right::all();
-        $users = RightUser::all();
+        $users = User::all();
         $group = Group::findorFail($id);
 
-        return view('groups.edit', compact('group'), ['rights' => $rights, 'users' => $users,]);
+        return view('groups.edit', [
+            'name' => $request->name,
+            'rights' => $rights,
+            'users' => $users,
+            'group' => $group,
+        ]);
     }
 
 
     public function update(Request $request, $id)
     {
-        $validatedData = $request->validate([
-            'name' => 'required|max:255',
+        $groupdata = $request->validate([
+            'name' => ['required'],
+
         ]);
 
-        Group::where('id', $id)->update($validatedData);
-        GroupUser::where('id', $id)->update($request->naamselect);
+        GroupUser::query()
+            ->where('group_id', $id)
+            ->delete();
+
+            if($request->naamselect) {
+                foreach($request->naamselect as $user) {
+
+                    GroupUser::create([
+                        'group_id'=> $id,
+                        'user_id' => $user,
+                    ]);
+                }
+            }
+
+        Group::where('id', $id)->update($groupdata);
+       return redirect('/groups')->with('success', 'groep succes vol aangepast');
     }
 
 

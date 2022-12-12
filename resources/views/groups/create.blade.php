@@ -1,5 +1,10 @@
 @extends('layouts.app')
 @section('content')
+@if(auth()->user()->hasRight([
+    'administrator',
+    'secretariaat',
+    'scholier-begeleider',
+]))
     <div class="container">
         <div class="card uper">
             <div class="card-header">
@@ -25,22 +30,17 @@
 
                         </select>
                     </div>
-                    <button type="submit" class="btn btn-success my-1">Add Group</button>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-success text-white">
+                            <i class="fas fa-save"></i> Opslaan
+                        </button>
+                    </div>
                 </form>
             </div>
         </div>
         <div>
-            @if ($errors->any())
-                <div class="mt-4 alert alert-danger">
-                    <ul class="m-0">
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
-            </div>
     </div>
+    @endif
     <script>
         function getselectedright(){
             var selector = document.getElementById('rechtenselect').value;

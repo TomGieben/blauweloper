@@ -1,16 +1,23 @@
 @extends('layouts.app')
 @section('content')
-    <div class="container">
-        <div class="card uper">
-            <div class="card-header">
-                Add Group Data
-            </div>
-            <div class="card-body">
-                <form method="post" action="{{ route('groups.update', $group->id) }}">
+    @if(auth()->user()->hasRight([
+        'administrator',
+        'secretariaat',
+        'scholier-begeleider',
+    ]))
+    <div class="row justify-content-center">
+        <form method="POST" action="{{ route('groups.update', $group->id) }}">
+            @method('PUT')
+            @csrf
+            <div class="card">
+                <div class="card-header">
+                    Recht {{ $group->id }} bewerken
+                </div>
+                <div class="card-body">
                     <div class="form-group">
                         @csrf
-                        <label for="name">Group name</label>
-                        <input type="text" class="form-control" name="name" />
+                        <label for="name">Groep naam</label>
+                        <input value="{{ $group->name }}" type="text" class="form-control" name="name" />
                     </div>
                     <div>
                         <label for="rechtenselect">Selecteer Rechten </label>
@@ -23,26 +30,36 @@
                     <div>
                         <select class="multiple col-lg-3" name="naamselect[]" multiple="multiple" id="naamselect">
                             @foreach ($users as $user)
-                            <option value="{{$user->id}}" selected>{{$user->name}}</option>
+                                <option value="{{$user->id}}" @if($user->inGroup($group->slug)) selected @endif>{{$user->name}}</option>
                             @endforeach
                         </select>
                     </div>
-                    <button type="submit" class="btn btn-success my-1">Add Group</button>
-                </form>
-            </div>
-        </div>
-        <div>
-            @if ($errors->any())
-                <div class="mt-4 alert alert-danger">
-                    <ul class="m-0">
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
                 </div>
-            @endif
+                <div class="card-footer">
+                    <div class="row justify-content-between">
+                        <div class="col-auto">
+                            <button type="submit" class="btn btn-success text-white">
+                                <i class="fas fa-save"></i> Opslaan
+                            </button>
+                        </form>
+                        </div>
+                        <div class="col-auto">
+                            <form method="POST" action="{{ route('groups.destroy', $group->id) }}">
+                                {{ csrf_field() }}
+                                {{ method_field('DELETE') }}
+
+                                <div class="form-group">
+                                    <button type="button" class="btn btn-danger text-white delete-user">
+                                        <i class="fas fa-trash"></i> Verwijder
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
     </div>
+    @endif
     <script>
         function getselectedright(){
             var selector = document.getElementById('rechtenselect').value;

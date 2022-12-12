@@ -1,37 +1,52 @@
 @extends('layouts.app')
-
 @section('content')
-<div class="container">
-    @if(session()->get('success'))
-    <div class="alert alert-success">
-        {{ session()->get('success') }}
-    </div><br />
+    @if(auth()->user()->hasRight([
+        'administrator',
+        'secretariaat',
+        'scholier-begeleider',
+    ]))
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row justify-content-between">
+                        <div class="col-auto">
+                            groepen
+                        </div>
+                        <div class="col-auto">
+                            <a href="{{ route('groups.create') }}" class="btn btn-success text-white">
+                                <i class="fas fa-plus"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Naam</th>
+                                <th scope="col">Opties</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                @foreach($groups as $group)
+                                    <tr>
+                                        <td>{{ $group->name }}</td>
+                                        <td>
+                                            <a href="{{ route('groups.edit', $group->id) }}" class="btn btn-warning">
+                                                <i class="fas fa-pencil"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
     @endif
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <td>ID</td>
-                <td>group Name</td>
-                <td>Action</td>
-                <td><a href="{{ route('groups.create',)}}" class="btn btn-success">Create</a></td>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($groups as $group)
-                <tr>
-                    <td>{{$group->id}}</td>
-                    <td>{{$group->name}}</td>
-                    <td><a href="{{ route('groups.edit', $group->id)}}" class="btn btn-primary">Edit</a></td>
-                    <td>
-                        <form action="{{ route('groups.destroy', $group->id)}}" method="post">
-                        @csrf
-                        @method('DELETE')
-                        <button class="btn btn-danger" type="submit">Delete</button>
-                        </form>
-                    </td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
-<div>
 @endsection
