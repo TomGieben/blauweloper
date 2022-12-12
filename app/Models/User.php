@@ -53,14 +53,15 @@ class User extends Authenticatable
         return $random_password;
     }
     
-    public function matches(): BelongsToMany {
-        return $this->belongsToMany(Match::class, 'match_users', 'user_id', 'match_id')->withPivot('is_player', 'has_won', 'score');
-    }
-
     public function rights(): BelongsToMany {
         return $this->belongsToMany(Right::class, 'right_users', 'user_id', 'right_id');
     }
 
+    public function matches(): BelongsToMany
+    {
+        return $this->belongsToMany(Match::class, 'match_users', 'user_id', 'match_id')->withPivot('is_player', 'has_won', 'score', 'created_at', 'updated_at');
+    }
+    
     public function hasRight(array $rights = []): bool {
         foreach($rights as $right) {
             $right = Right::select('id')->where('slug', $right)->first();
@@ -94,5 +95,4 @@ class User extends Authenticatable
 
         return ($group ? $relation : false);
     }
-    
 }
