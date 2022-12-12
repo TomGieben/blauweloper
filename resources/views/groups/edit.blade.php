@@ -52,7 +52,7 @@
 
                                 <div class="form-group">
                                     <button type="button" class="btn btn-danger text-white delete-user">
-                                        <i class="fas fa-trash"></i> Verwijder groep
+                                        <i class="fas fa-trash"></i> Verwijder
                                     </button>
                                 </div>
                             </form>

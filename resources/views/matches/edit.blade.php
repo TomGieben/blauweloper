@@ -16,7 +16,6 @@
                 <div class="card-header">
                     Wedstrijd {{ $match->name }} bewerken
                 </div>
-                {{-- @DD($match) --}}
                 <div class="card-body">
                     <div class="form-group mb-2">
                         <label for="name">Wedstijd naam:</label>
@@ -60,7 +59,7 @@
                     <div class="row justify-content-between">
                         <div class="col-auto">
                             <button type="submit" class="btn btn-success text-white">
-                                <i class="fas fa-save"></i> Match Opslaan
+                                <i class="fas fa-save"></i> Opslaan
                             </button>
                         </form>
                         </div>

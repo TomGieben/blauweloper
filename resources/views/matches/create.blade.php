@@ -25,7 +25,7 @@
             </div>
             <div class="form-group row justify-content-between">
                 <label for="player-1" class="col-form-label">Speler 1:</label>
-                <select class="col-auto mx-2 form-control w-25" name="player1" id="player1box" onchange="update()">
+                <select class="col-auto mx-2 form-control w-25" name="player1" onchange="update()">
                     <option>Selecteer...</option>
                     @foreach ($users as $user)
                         <option value="{{$user->id}}">{{$user->name}}</option>
@@ -50,7 +50,7 @@
                     @endforeach
                 </select>
             </div>
-            <input type="submit" class="btn btn-success text-white mt-2" value="Match aan maken!">
+            <input type="submit" class="btn btn-success text-white mt-2" value="Opslaan">
         </form>
     </div>
 </div>
