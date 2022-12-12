@@ -27,6 +27,14 @@
 
     {{-- Font awesome --}}
     <script src="https://kit.fontawesome.com/5e3d25cf7b.js" crossorigin="anonymous"></script>
+
+    {{-- Jquery --}}
+    <script
+        src="https://code.jquery.com/jquery-3.6.1.slim.min.js"
+        integrity="sha256-w8CvhFs7iHNVUtnSP0YKEg00p9Ih13rlL9zGqvLdePA="
+        crossorigin="anonymous">
+    </script>
+
 </head>
 <body>
     <div id="app">
@@ -73,6 +81,15 @@
                                         <i class="fas fa-grid-horizontal"></i>
                                         Overzicht
                                     </a>
+                                    @if(auth()->user()->hasRight([
+                                        'administrator',
+                                        'lid',
+                                    ]))
+                                        <a class="dropdown-item {{ Route::is('chess.*') ? 'active' : '' }}" href="{{ route('chess') }}">
+                                            <i class="fas fa-solid fa-play"></i>
+                                            Spelen
+                                        </a>
+                                    @endif
                                     @if(auth()->user()->hasRight([
                                         'administrator',
                                         'secretariaat',
