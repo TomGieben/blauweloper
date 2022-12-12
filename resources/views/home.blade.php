@@ -10,67 +10,71 @@
 
     <div class="row justify-content-between">
         @if (session('status'))
-            <div class="col-md-12">
+            <div class="col-md-12 my-2">
                 <div class="alert alert-success my-2" role="alert">
                     {{ session('status') }}
                 </div>
             </div>
         @endif
 
-        @if($currentRights->isNotEmpty())
-            <div class="col-auto">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-title">
+      
+            <div class="col-md-4 my-2">
+                <div class="card bg-primary">
+                    <div class="card-body text-white">
+                        <h4>
                             <i class="fas fa-gavel"></i>
                             Rechten
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <ul class="list-group list-group-light">
-                            @foreach ($currentRights as $right)
-                                <li class="list-group-item">
-                                    {{ $right->name }}
-                                </li>
-                            @endforeach
-                        </ul>
+                        </h4>
+                        @if($currentRights->isNotEmpty())
+                            <ul class="list-group list-group-light">
+                                @foreach ($currentRights as $right)
+                                    <li class="list-group-item">
+                                        {{ $right->name }}
+                                    </li>
+                                @endforeach
+                            </ul>
+                        @else
+                            <p>Je hebt nog geen rechten.</p>
+                        @endif
                     </div>
                 </div>
             </div>
-        @endif
 
-        @if($currentMatches->isNotEmpty())
-            <div class="col-auto">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-title">
-                            <i class="fas fa-chess"></i>
-                            Wedstrijden
-                        </div>
-                    </div>
-                    <div class="card-body">
+       
+        <div class="col-md-4 my-2">
+            <div class="card bg-secondary">
+                <div class="card-body text-white">
+                    <h4>
+                        <i class="fas fa-chess"></i>
+                        Wedstrijden
+                    </h4>
+                    @if($currentMatches->isNotEmpty())
                         <ul class="list-group list-group-light">
                             @foreach ($currentMatches as $match)
                                 <li class="list-group-item">
-                                    {{ $match->name }} | {{ $match->start_date }}
+                                    {{ $match->name }} | {{ $match->getStartDate() }}
                                 </li>
                             @endforeach
                         </ul>
-                    </div>
+                    @else
+                        <p>Er zijn geen wedstrijden gepland.</p>
+                    @endif
                 </div>
             </div>
-        @endif
+        </div>
 
-        <div class="col-auto">
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-title">
+        <div class="col-md-4 my-2">
+            <div class="card bg-info">
+                <div class="card-body text-white">
+                    <h4>
                         <i class="fas fa-trophy"></i>
                         Gewonnen
-                    </div>
-                </div>
-                <div class="card-body">
-                    {{ $matchesWon }}
+                    </h4>
+                    <ul class="list-group list-group-light">
+                        <li class="list-group-item">
+                            {{ $matchesWon }}
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
