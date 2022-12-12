@@ -6,6 +6,7 @@ use App\Http\Controllers\MatchController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RightController;
+use App\Http\Controllers\ChessController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,6 +27,7 @@ Auth::routes();
 
 Route::middleware('auth')->group(function() {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
+    Route::get('/chess', [ChessController::class, 'index'])->name('chess');
 
     Route::resource('matches', MatchController::class);
     Route::resource('groups', GroupController::class);
