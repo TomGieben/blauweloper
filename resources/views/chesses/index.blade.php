@@ -27,7 +27,24 @@
                         colorPiece = 'black';
                     }
 
-                    $(this).html('<i class="fa-solid fa-chess-pawn fa-2x" style="color: '+ colorPiece +'"></i>');
+                    var rN = Math.floor((Math.random() * 10) + 1);
+                    
+                    if(rN == 1) {
+                        $(this).html('<i class="fa-solid fa-chess-pawn-piece fa-2x" style="color: blue"></i>');
+                    }else if(rN == 2) {
+                        $(this).html('<i class="fa-solid fa-chess-knight-piece fa-2x" style="color: '+ colorPiece +'"></i>');
+                    }else if(rN == 3) {
+                        $(this).html('<i class="fa-solid fa-chess-rook-piece fa-2x" style="color: '+ colorPiece +'"></i>');
+                    }else if(rN == 4) {
+                        $(this).html('<i class="fa-solid fa-chess-king-piece fa-2x" style="color: '+ colorPiece +'"></i>');
+                    }else if(rN == 5) {
+                        $(this).html('<i class="fa-solid fa-chess-bishop-piece fa-2x" style="color: '+ colorPiece +'"></i>');
+                    }else if(rN == 6) {
+                        $(this).html('<i class="fa-solid fa-chess-queen-piece fa-2x" style="color: '+ colorPiece +'"></i>');
+                    }else {
+                        $(this).html('<i class="fa-solid fa-chess-pawn-piece fa-2x" style="color: '+ colorPiece +'"></i>');
+                    }
+
                 });
             
         </script>
