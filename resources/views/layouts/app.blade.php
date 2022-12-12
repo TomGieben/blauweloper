@@ -85,7 +85,7 @@
                                         'administrator',
                                         'lid',
                                     ]))
-                                        <a class="dropdown-item {{ Route::is('chess.*') ? 'active' : '' }}" href="{{ route('chess') }}">
+                                        <a class="dropdown-item {{ Route::is('chess') ? 'active' : '' }}" href="{{ route('chess') }}">
                                             <i class="fas fa-solid fa-play"></i>
                                             Spelen
                                         </a>
