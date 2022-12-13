@@ -101,6 +101,8 @@
                                     @endif
                                     @if(auth()->user()->hasRight([
                                         'administrator',
+                                        'secretariaat',
+                                        'scholier-begeleider',
                                     ]))
                                         <a class="dropdown-item {{ Route::is('groups.*') ? 'active' : '' }}" href="{{ route('groups.index') }}">
                                             <i class="fas fa-people-group"></i>

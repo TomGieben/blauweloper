@@ -26,9 +26,7 @@
         </div>
 
         <script>
-            setInterval(update, 2000);
-
-                $(".tile").click(function(){
+                $(document).on("click", ".tile", function(){
                     console.log("Y: " + $(this).attr('data-y'));
                     console.log("X: " + $(this).attr('data-x'));
                     console.log("Color: " + $(this).attr('data-color'));
@@ -77,16 +75,20 @@
                     });
                 }
 
-                function update() {
-                    var html = $('#chess-container').html();
-                    
+                function update() {                    
                     $.ajax({
-                            url: "{{ route('chess.update') }}", 
-                            success: function(result){
+                        url: "{{ route('chess.update') }}", 
+                        success: function(result) {
                             $('#chess-container').html(result);
-
-                        }});
+                        }
+                    });
                 }
+
+                setInterval(
+                    function() { 
+                        update(); 
+                    }
+                ,5000);
 
         </script>
     @endif
