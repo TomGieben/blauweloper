@@ -68,9 +68,9 @@ class UserController extends Controller
                     'user_id' => $user->id,
                 ]);
             }
-
-            return redirect()->route('users.index');
         }
+
+        return redirect()->route('users.index');
     }
 
     public function edit(Request $request, User $user)
