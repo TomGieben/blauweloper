@@ -31,6 +31,11 @@ class ChessController extends Controller
         }
     }
 
+    public function update(Request $request) {
+
+        
+    }
+
     public function delete(Chess $chess) {
         $chess->delete();
 

@@ -71,9 +71,6 @@
                         data: {
                             "_token": "{{ csrf_token() }}",
                             "body": html,
-                        },
-                        success: function(result)  {
-                            console.log(result);
                         }
                     });
                 }
