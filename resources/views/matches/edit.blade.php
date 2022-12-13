@@ -28,8 +28,8 @@
                         </div>
                     </div>
                     <div class="form-group row justify-content-between">
-                        <label for="player-1" class="col-form-label">Speler 1: </label>
-                        <select class="col-auto mx-2 form-control w-25" name="player1" id="player1box" onchange="update()">
+                        <label for="player1" class="col-form-label">Speler 1: </label>
+                        <select class="col-auto mx-2 form-control w-25" name="player1" onchange="update()">
                             <option value="0">Selecteer...</option>
                             @foreach ($users as $user)
                                 <option value="{{$user->id}}">{{$user->name}}</option>
@@ -37,7 +37,7 @@
                         </select>
                     </div>
                     <div class="form-group row justify-content-between">
-                        <label for="player-2" class="col-form-label">Speler 2:</label>
+                        <label for="player2" class="col-form-label">Speler 2:</label>
                         <select class="col-auto mx-2 form-control w-25" name="player2" onchange="update()">
                             <option value="0">Selecteer...</option>
                             @foreach ($users as $user)
@@ -80,31 +80,34 @@
             </div>
     </div>
     @endif
-<script>
+    <script>
 
-    function update() {
-        const clickedElement = $(event.target);
-        const selectName = clickedElement.attr('name');
-        const selectedVal = clickedElement.val();
-        const selects = [
-            'player1',
-            'player2',
-            'coach'
-        ];
+        function update() {
+            const clickedElement = $(event.target);
+            const selectName = clickedElement.attr('name');
+            const selects = [
+                'player1',
+                'player2',
+                'coach',
+            ];
+            
+            var values = $('select').map(function(){
+                  return this.value
+            }).get();
     
-        selects.forEach(select => {
-            if(select !== selectName) {
+            selects.forEach(select => {
                 var options = $("select[name='"+ select +"'] > option");
                 
                 options.each(function() {
-                    if(this.value == selectedVal) {
-                        this.style.display = 'none';
-                    } else {
-                        this.style.display = 'block';
+                    if(this.value !== '0') {
+                        if(values.includes(this.value)) {
+                            this.style.display = 'none';
+                        } else {
+                            this.style.display = 'block';
+                        }
                     }
                 });
-            }
-        });
-    }
-</script>
+            });
+        }
+    </script>
 @endsection
