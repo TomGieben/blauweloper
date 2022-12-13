@@ -29,6 +29,7 @@ Route::middleware('auth')->group(function() {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
 
     Route::get('/chess', [ChessController::class, 'index'])->name('chess');
+    Route::get('/chess/update', [ChessController::class, 'update'])->name('chess.update');
     Route::post('/chess/store', [ChessController::class, 'store'])->name('chess.store');
     Route::delete('/chess/{chess}', [ChessController::class, 'delete'])->name('chess.destroy');
 

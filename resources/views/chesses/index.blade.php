@@ -26,6 +26,7 @@
         </div>
 
         <script>
+            setInterval(update, 2000);
 
                 $(".tile").click(function(){
                     console.log("Y: " + $(this).attr('data-y'));
@@ -59,10 +60,10 @@
                         $(this).html('<i class="fa-solid fa-chess-pawn-piece fa-2x" style="color: '+ colorPiece +'"></i>');
                     }
 
-                    store();
+                    store("{{ $_REQUEST['ai'] }}");
                 });
 
-                function store() {
+                function store(ai) {
                     var html = $('#chess-container').html();
                     
                     $.ajax({
@@ -71,12 +72,22 @@
                         data: {
                             "_token": "{{ csrf_token() }}",
                             "body": html,
-                        },
-                        success: function(result)  {
-                            console.log(result);
+                            "ai": ai,
                         }
                     });
                 }
+
+                function update() {
+                    var html = $('#chess-container').html();
+                    
+                    $.ajax({
+                            url: "{{ route('chess.update') }}", 
+                            success: function(result){
+                            $('#chess-container').html(result);
+
+                        }});
+                }
+
         </script>
     @endif
 @endsection

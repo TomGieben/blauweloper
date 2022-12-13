@@ -31,25 +31,40 @@ class Chess extends Model
     }
 
     public function getBoard(): HtmlString {
-        if(!auth()->user()->chesses()->first()) {
-            $boardHeight = $this->rows * $this->tileHeight;
-            $boardWidth = $this->colums * $this->tileWidth;
-    
-            $html = '<div style="height: '.($boardHeight + ($this->border * 2)).'px; width: '.($boardWidth + ($this->border * 2)).'px; border: '. $this->border .'px solid black;">';
-                for($r = 1; $r <= $this->rows; $r++) {
-                    for($c = 1; $c <= $this->colums; $c++) {
-                        $total = $r + $c;
-                        if($total % 2 == 0) {
-                            $html .= $this->getTile('white', $r, $c);
-                        }else {
-                            $html .= $this->getTile('black', $r, $c);
+        if(request()->ai == "true") {
+            if(!auth()->user()->chesses()->first()) {
+                $boardHeight = $this->rows * $this->tileHeight;
+                $boardWidth = $this->colums * $this->tileWidth;
+        
+                $html = '<div style="height: '.($boardHeight + ($this->border * 2)).'px; width: '.($boardWidth + ($this->border * 2)).'px; border: '. $this->border .'px solid black;">';
+                    for($r = 1; $r <= $this->rows; $r++) {
+                        for($c = 1; $c <= $this->colums; $c++) {
+                            $total = $r + $c;
+                            if($total % 2 == 0) {
+                                $html .= $this->getTile('white', $r, $c);
+                            }else {
+                                $html .= $this->getTile('black', $r, $c);
+                            }
                         }
                     }
-                }
-            $html .= '</div>';
+                $html .= '</div>';
+            } else {
+                $html = auth()->user()->chesses()->first()->body;
+            }
         } else {
-            $html = auth()->user()->chesses()->first()->body;
+            $datetime = date('Y-m-d h:i:s');
+            
+            $match = User::query()
+                ->where('id', auth()->user()->id)
+                ->with('matches', function($query) use ($datetime) {
+                    $query->where('start_date', '>=', $datetime);
+                })
+                ->first()
+                ->matches[0] ?? null;
+
+            $html = $match->body;
         }
+
 
         return new HtmlString($html);
     }

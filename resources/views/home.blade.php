@@ -51,7 +51,7 @@
                     @if($currentMatches->isNotEmpty())
                         <ul class="list-group list-group-light">
                             @foreach ($currentMatches as $match)
-                                <li class="list-group-item">
+                                <li class="list-group-item" onclick="window.location.href='{{ route('chess') }}?ai=false'" style="cursor:pointer;">
                                     {{ $match->name }} | {{ $match->getStartDate() }}
                                 </li>
                             @endforeach

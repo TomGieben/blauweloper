@@ -20,6 +20,7 @@ class Match extends Model
         'slug',
         'start_date',
         'end_date',
+        'body',
     ];
 
     public function getRouteKeyName(){
