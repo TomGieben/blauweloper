@@ -10,7 +10,7 @@
 
     <div class="row justify-content-between">
         @if (session('status'))
-            <div class="col-md-12">
+            <div class="col-md-12 my-2">
                 <div class="alert alert-success my-2" role="alert">
                     {{ session('status') }}
                 </div>
@@ -18,7 +18,7 @@
         @endif
 
       
-            <div class="col-md-4">
+            <div class="col-md-4 my-2">
                 <div class="card bg-primary">
                     <div class="card-body text-white">
                         <h4>
@@ -41,7 +41,7 @@
             </div>
 
        
-        <div class="col-md-4">
+        <div class="col-md-4 my-2">
             <div class="card bg-secondary">
                 <div class="card-body text-white">
                     <h4>
@@ -63,7 +63,7 @@
             </div>
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-4 my-2">
             <div class="card bg-info">
                 <div class="card-body text-white">
                     <h4>

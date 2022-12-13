@@ -50,7 +50,7 @@
                     @endforeach
                 </select>
             </div>
-            <input type="submit" class="btn btn-success text-white mt-2" value="Match aan maken!">
+            <input type="submit" class="btn btn-success text-white mt-2" value="Opslaan">
         </form>
     </div>
 </div>

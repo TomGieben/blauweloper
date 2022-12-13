@@ -6,6 +6,7 @@ use App\Http\Controllers\MatchController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RightController;
+use App\Http\Controllers\ChessController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,6 +27,12 @@ Auth::routes();
 
 Route::middleware('auth')->group(function() {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
+
+    Route::get('/chess', [ChessController::class, 'index'])->name('chess');
+    Route::post('/chess/store', [ChessController::class, 'store'])->name('chess.store');
+    Route::delete('/chess/{chess}', [ChessController::class, 'delete'])->name('chess.destroy');
+
+    Route::post('/groups/ajax', [GroupController::class, 'ajax'])->name('ajax');
 
     Route::resource('matches', MatchController::class);
     Route::resource('groups', GroupController::class);

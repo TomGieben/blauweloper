@@ -128,6 +128,7 @@ class UserController extends Controller
                 ]);
             }
         }
+        
         if(auth()->user()->hasRight([
             'administrator',
             'secretariaat',
