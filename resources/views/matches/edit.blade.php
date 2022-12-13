@@ -69,7 +69,7 @@
                                 {{ method_field('DELETE') }}
                         
                                 <div class="form-group">
-                                    <button type="button" class="btn btn-danger text-white delete-user">
+                                    <button type="button" class="btn btn-danger text-white">
                                         <i class="fas fa-trash"></i> Verwijder
                                     </button>
                                 </div>
