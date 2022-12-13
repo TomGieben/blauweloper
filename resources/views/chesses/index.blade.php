@@ -7,8 +7,22 @@
         'lid',
     ]))
 
-        <div class="container d-flex justify-content-center">
+        <div class="container d-flex justify-content-center" id="chess-container">
             {{ $board }}
+        </div>
+        <div class="container d-flex justify-content-center mt-2">
+            @if(auth()->user()->chesses()->first())
+                <form method="POST" action="{{ route('chess.destroy', [auth()->user()->chesses()->first()]) }}">
+                    {{ csrf_field() }}
+                    {{ method_field('DELETE') }}
+            
+                    <div class="form-group">
+                        <button type="button" class="btn btn-danger text-white delete-user">
+                            <i class="fas fa-trash"></i> Verwijder
+                        </button>
+                    </div>
+                </form>
+            @endif
         </div>
 
         <script>
@@ -45,8 +59,24 @@
                         $(this).html('<i class="fa-solid fa-chess-pawn-piece fa-2x" style="color: '+ colorPiece +'"></i>');
                     }
 
+                    store();
                 });
-            
+
+                function store() {
+                    var html = $('#chess-container').html();
+                    
+                    $.ajax({
+                        url: "{{ route('chess.store') }}", 
+                        method: "POST",
+                        data: {
+                            "_token": "{{ csrf_token() }}",
+                            "body": html,
+                        },
+                        success: function(result)  {
+                            console.log(result);
+                        }
+                    });
+                }
         </script>
     @endif
 @endsection

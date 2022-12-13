@@ -57,6 +57,10 @@ class User extends Authenticatable
         return $this->belongsToMany(Right::class, 'right_users', 'user_id', 'right_id');
     }
 
+    public function chesses(): HasMany {
+        return $this->hasMany(Chess::class);
+    }
+
     public function matches(): BelongsToMany
     {
         return $this->belongsToMany(Match::class, 'match_users', 'user_id', 'match_id')->withPivot('is_player', 'has_won', 'score', 'created_at', 'updated_at');
