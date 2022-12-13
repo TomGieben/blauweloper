@@ -61,6 +61,10 @@ class User extends Authenticatable
         return $this->belongsToMany(Right::class, 'right_users', 'user_id', 'right_id');
     }
 
+    public function chesses(): HasMany {
+        return $this->hasMany(Chess::class);
+    }
+
     public function hasRight(array $rights = []): bool {
         foreach($rights as $right) {
             $right = Right::select('id')->where('slug', $right)->first();

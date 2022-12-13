@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Models\User;
 
 class CreateChessesTable extends Migration
 {
@@ -15,7 +16,10 @@ class CreateChessesTable extends Migration
     {
         Schema::create('chesses', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(User::class);
+            $table->text('body');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

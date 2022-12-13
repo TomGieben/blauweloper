@@ -27,7 +27,10 @@ Auth::routes();
 
 Route::middleware('auth')->group(function() {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
+
     Route::get('/chess', [ChessController::class, 'index'])->name('chess');
+    Route::post('/chess/store', [ChessController::class, 'store'])->name('chess.store');
+    Route::delete('/chess/{chess}', [ChessController::class, 'delete'])->name('chess.destroy');
 
     Route::resource('matches', MatchController::class);
     Route::resource('groups', GroupController::class);
