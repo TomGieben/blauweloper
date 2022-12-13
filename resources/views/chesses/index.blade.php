@@ -44,7 +44,7 @@
                     var rN = Math.floor((Math.random() * 10) + 1);
                     
                     if(rN == 1) {
-                        $(this).html('<i class="fa-solid fa-chess-pawn-piece fa-2x" style="color: blue"></i>');
+                        $(this).html('<i class="fa-solid fa-chess-bishop-piece fa-2x" style="color: blue"></i>');
                     }else if(rN == 2) {
                         $(this).html('<i class="fa-solid fa-chess-knight-piece fa-2x" style="color: '+ colorPiece +'"></i>');
                     }else if(rN == 3) {

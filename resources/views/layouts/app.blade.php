@@ -15,6 +15,9 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
 
+    {{-- Jquery --}}
+    <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
+
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
@@ -27,10 +30,12 @@
 
     {{-- Jquery --}}
     <script
-        src="https://code.jquery.com/jquery-3.6.1.js"
-        integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
-        crossorigin="anonymous"></script>
-    </head>
+      src="https://code.jquery.com/jquery-3.6.1.js"
+      integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
+      crossorigin="anonymous">
+    </script>
+
+</head>
 <body>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-primary shadow-sm">
@@ -80,7 +85,7 @@
                                         'administrator',
                                         'lid',
                                     ]))
-                                        <a class="dropdown-item {{ Route::is('chess.*') ? 'active' : '' }}" href="{{ route('chess') }}">
+                                        <a class="dropdown-item {{ Route::is('chess') ? 'active' : '' }}" href="{{ route('chess') }}">
                                             <i class="fas fa-solid fa-play"></i>
                                             Spelen
                                         </a>

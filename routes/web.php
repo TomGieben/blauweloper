@@ -32,6 +32,8 @@ Route::middleware('auth')->group(function() {
     Route::post('/chess/store', [ChessController::class, 'store'])->name('chess.store');
     Route::delete('/chess/{chess}', [ChessController::class, 'delete'])->name('chess.destroy');
 
+    Route::post('/groups/ajax', [GroupController::class, 'ajax'])->name('ajax');
+
     Route::resource('matches', MatchController::class);
     Route::resource('groups', GroupController::class);
     Route::resource('users', UserController::class);

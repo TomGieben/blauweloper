@@ -49,12 +49,8 @@ class User extends Authenticatable
 
     public static function generatePassword() {
         $random_password = str::random(12);
-    
+
         return $random_password;
-    }
-    
-    public function matches(): BelongsToMany {
-        return $this->belongsToMany(Match::class, 'match_users', 'user_id', 'match_id')->withPivot('is_player', 'has_won', 'score');
     }
 
     public function rights(): BelongsToMany {
@@ -65,18 +61,23 @@ class User extends Authenticatable
         return $this->hasMany(Chess::class);
     }
 
+    public function matches(): BelongsToMany
+    {
+        return $this->belongsToMany(Match::class, 'match_users', 'user_id', 'match_id')->withPivot('is_player', 'has_won', 'score', 'created_at', 'updated_at');
+    }
+    
     public function hasRight(array $rights = []): bool {
         foreach($rights as $right) {
             $right = Right::select('id')->where('slug', $right)->first();
             $user = $this;
-    
+
             if($right) {
                 $relation = RightUser::query()
                     ->where('user_id', $user->id)
                     ->where('right_id', $right->id)
                     ->exists();
             }
-    
+
             if($right && $relation) {
                 return true;
             };
@@ -98,5 +99,9 @@ class User extends Authenticatable
 
         return ($group ? $relation : false);
     }
-    
+
+    public function groups(): BelongsToMany
+    {
+        return $this->belongsToMany(Group::class, 'group_users', 'group_id', 'user_id');
+    }
 }

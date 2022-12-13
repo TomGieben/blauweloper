@@ -51,7 +51,6 @@ class Chess extends Model
             $html = auth()->user()->chesses()->first()->body;
         }
 
-
         return new HtmlString($html);
     }
 }
