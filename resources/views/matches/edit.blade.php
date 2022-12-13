@@ -80,31 +80,34 @@
             </div>
     </div>
     @endif
-<script>
+    <script>
 
-    function update() {
-        const clickedElement = $(event.target);
-        const selectName = clickedElement.attr('name');
-        const selectedVal = clickedElement.val();
-        const selects = [
-            'player1',
-            'player2',
-            'coach',
-        ];
+        function update() {
+            const clickedElement = $(event.target);
+            const selectName = clickedElement.attr('name');
+            const selects = [
+                'player1',
+                'player2',
+                'coach',
+            ];
+            
+            var values = $('select').map(function(){
+                  return this.value
+            }).get();
     
-        selects.forEach(select => {
-            if(select !== selectName) {
+            selects.forEach(select => {
                 var options = $("select[name='"+ select +"'] > option");
                 
                 options.each(function() {
-                    if(this.value == selectedVal) {
-                        this.style.display = 'none';
-                    } else {
-                        this.style.display = 'block';
+                    if(this.value !== '0') {
+                        if(values.includes(this.value)) {
+                            this.style.display = 'none';
+                        } else {
+                            this.style.display = 'block';
+                        }
                     }
                 });
-            }
-        });
-    }
-</script>
+            });
+        }
+    </script>
 @endsection
