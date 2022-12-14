@@ -84,12 +84,13 @@
                     });
                 }
 
-                setInterval(
-                    function() { 
-                        update(); 
-                    }
-                ,5000);
-
+                @if($_REQUEST['ai'] == "false")
+                    setInterval(
+                        function() { 
+                            update(); 
+                        }
+                    ,5000);
+                @endif
         </script>
     @endif
 @endsection
