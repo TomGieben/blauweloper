@@ -63,7 +63,7 @@ class ChessController extends Controller
 
         if($match) {
             $html = $match->body;
-        }
+        } 
         
         return $html ?? "";
     }

@@ -91,6 +91,8 @@
                         }
                     ,5000);
                 @endif
+
+                store("{{ $_REQUEST['ai'] }}");
         </script>
     @endif
 @endsection

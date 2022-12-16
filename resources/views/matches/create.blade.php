@@ -12,7 +12,7 @@
             @csrf
             <div class="card">
                 <div class="card-header">
-                    Wedstrijd Maaken
+                    Wedstrijd Maken
                 </div>
                 <div class="card-body">
                     <div class="form-group mb-2">
