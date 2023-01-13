@@ -9,13 +9,13 @@
 
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-md-8">
+                <div class="col-md-10">
                     <div class="card">
                         <div class="card-header">
                             <div class="row justify-content-between">
                                 <div class="col-auto">
                                     <div class="card-title">
-                                        Edit user
+                                        Gebruiker wijzigen
                                     </div>
                                 </div>
                                 <div class="col-auto">
@@ -31,39 +31,41 @@
                                 @method('put')
                                 @csrf
                                 <div class="row justify-content-between">
-                                    <div class="col-auto">
-                                        <label for="name"><h4>Naam<h4></label>
+                                    <div class="col-md-6">
+                                        <label for="name">Naam</label>
                                         <input type="text" class="form-control" id="name" name="name" value="{{ $user->name }}">
                                     </div>
-                                </div>
-                                <div class="row justify-content-between">
-                                    <div class="col-auto">
-                                        <label for="email"><h4>Email<h4></label>
+  
+                                    <div class="col-md-6">
+                                        <label for="email">Email</label>
                                         <input type="text" class="form-control" id="email" name="email" value="{{ $user->email }}">
                                     </div>
-                                </div>
 
-                                <div class="row justify-content-between">
-                                    <div class="col-auto">
-                                        <label for="password"><h4>Wachtwoord<h4></label>
+                                    <div class="col-md-12">
+                                        <label for="password">Wachtwoord</label>
                                         <input type="password" class="form-control" id="password" name="password">
                                     </div>
-                                </div>
-
-                                <div class="row justify-content-between mt-2">
-                                    <select class="multiple col-lg-3" name="rights[]" multiple="multiple">
-                                        @foreach ($rights as $right) 
-                                            <option value="{{$right->id}}" @if($user->hasRight([$right->slug])) selected @endif>{{$right->name}}</option>
-                                        @endforeach
-                                    </select>
-                            </div>
-
-                            <div class="row justify-content-between mt-3">
-                                <select class="multiple col-lg-3" name="groups[]" multiple="multiple">
-                                    @foreach ($groups as $group)
-                                        <option value="{{$group->id}}" @if($user->inGroup($group->slug)) selected @endif>{{$group->name}}</option>
-                                    @endforeach
-                                </select>
+                                    @if(auth()->user()->hasRight([
+                                        'administrator',
+                                        'secretariaat',
+                                    ]))
+                                        <div class="col-md-6">
+                                            <label for="rights">Rechten</label>
+                                            <select class="multiple form-control" id="rights" name="rights[]" multiple="multiple">
+                                                @foreach ($rights as $right) 
+                                                    <option value="{{$right->id}}" @if($user->hasRight([$right->slug])) selected @endif>{{$right->name}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    @endif
+                                    <div class="col-md-6">
+                                        <label for="groups">Groepen</label>
+                                        <select class="multiple form-control" id="groups" name="groups[]" multiple="multiple">
+                                            @foreach ($groups as $group)
+                                                <option value="{{$group->id}}" @if($user->inGroup($group->slug)) selected @endif>{{$group->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                             </div>
                         </div>
 
