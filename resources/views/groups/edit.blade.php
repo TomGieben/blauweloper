@@ -11,7 +11,7 @@
             @csrf
             <div class="card">
                 <div class="card-header">
-                     {{ $group->id }} informatie bewerken
+                     {{ $group->name }} informatie bewerken
                 </div>
                 <div class="card-body">
                     <div class="form-group">
@@ -31,8 +31,10 @@
                     </div>
                     <div class="mt-2">
                         <select class="multiple col-lg-3" name="naamselect[]" multiple="multiple" id="naamselect">
-                            @foreach ($users as $user)
-                                <option value="{{$user->id}}" @if($user->inGroup($group->slug)) selected @endif>{{$user->name}}</option>
+                             @foreach ($users as $user)
+                                @if($user->inGroup($group->slug))
+                                  <option value="{{$user->id}}" selected>{{$user->name}}</option>
+                                @endif
                             @endforeach
                         </select>
                     </div>
@@ -63,9 +65,8 @@
     </div>
     @endif
     <script>
-        function getselectedright(){
+           function getselectedright(){
             var selector = document.getElementById('rechtenselect').value;
-
             $.ajax({
             url : "{{ route('ajax') }}",
             type : 'POST',
@@ -74,13 +75,16 @@
                 'selectedright' : selector
             },
             dataType:'json',
-            success : function(data) {
-                data.forEach(user => {
-                    $('#naamselect').append($('<option>').val(user.id).text(user.name));
+            success : function(users) {
+                $('#naamselect').find('option').not(':selected').remove();
+
+                users.forEach((user) => {
+                    $("#naamselect").append(
+                        new Option(user.name, user.id)
+                    );
                 });
             },
             });
-
         }
     </script>
 @endsection

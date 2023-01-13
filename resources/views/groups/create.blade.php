@@ -46,7 +46,6 @@
     <script>
         function getselectedright(){
             var selector = document.getElementById('rechtenselect').value;
-
             $.ajax({
             url : "{{ route('ajax') }}",
             type : 'POST',
@@ -55,13 +54,16 @@
                 'selectedright' : selector
             },
             dataType:'json',
-            success : function(data) {
-                data.forEach(user => {
-                    $('#naamselect').append($('<option>').val(user.id).text(user.name));
+            success : function(users) {
+                $('#naamselect').find('option').not(':selected').remove();
+
+                users.forEach((user) => {
+                    $("#naamselect").append(
+                        new Option(user.name, user.id)
+                    );
                 });
             },
             });
-
         }
     </script>
 @endsection

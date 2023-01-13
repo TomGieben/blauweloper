@@ -113,6 +113,7 @@ class GroupController extends Controller
         $ajaxretrieve = User::whereHas('rights', function($query) use ($request){
             $query->where('id', $request->selectedright);
         })->get();
+
         return $ajaxretrieve;
     }
 }
